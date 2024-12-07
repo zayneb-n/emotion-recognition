@@ -1,0 +1,32 @@
+# Virtual environment
+venv/
+
+# Python cache files
+*.pyc
+*.pyo
+__pycache__/
+
+# Dataset files (optional, if dataset is large)
+datasets/
+
+# Log files
+*.log
+logs/
+
+# IDE-specific settings
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints (if using Jupyter)
+.ipynb_checkpoints/
+
+# Model files (optional, if models are very large and stored elsewhere)
+*.h5
+*.ckpt
+
+# Environment variables (optional)
+.env
