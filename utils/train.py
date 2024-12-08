@@ -68,4 +68,12 @@ model.compile(optimizer=Adam(learning_rate=0.0001),  # Small learning rate for f
 print("Complete Model:")
 model.summary()
 
+# Train the model
+history = model.fit(
+    train_generator,          # Augmented training data
+    validation_data=(X_val, y_val),  # Validation data
+    epochs=10,                # Number of epochs
+    batch_size=32             # Batch size
+)
 
+print("Training complete!")
