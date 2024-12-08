@@ -2,6 +2,9 @@ from preprocess import load_and_preprocess_dataset
 import tensorflow as tf
 import os
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Flatten, Dense, Dropout
 
 
 # Dynamically generate the dataset path
@@ -37,4 +40,17 @@ for batch_images, batch_labels in train_generator:
     print("Batch shape (images):", batch_images.shape)
     print("Batch shape (labels):", batch_labels.shape)
     break
+
+
+# Load ResNet50 pre-trained model without the top classification layer
+base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(48, 48, 3))
+
+# Freeze all layers in the base model
+for layer in base_model.layers:
+    layer.trainable = False
+
+# Print the base model summary for confirmation
+print("Base ResNet50 Model:")
+base_model.summary()
+
 
