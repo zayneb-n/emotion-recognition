@@ -5,6 +5,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Flatten, Dense, Dropout
+from tensorflow.keras.optimizers import Adam
 
 
 # Dynamically generate the dataset path
@@ -49,8 +50,22 @@ base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(48, 48
 for layer in base_model.layers:
     layer.trainable = False
 
-# Print the base model summary for confirmation
-print("Base ResNet50 Model:")
-base_model.summary()
+# Add custom layers on top of ResNet50
+x = Flatten()(base_model.output)               # Flatten the feature maps
+x = Dense(128, activation='relu')(x)           # Dense layer with 128 neurons
+x = Dropout(0.5)(x)                            # Dropout for regularization
+output = Dense(7, activation='softmax')(x)     # Output layer for 7 emotion classes
+
+# Combine base model and custom layers
+model = Model(inputs=base_model.input, outputs=output)
+
+# Compile the model
+model.compile(optimizer=Adam(learning_rate=0.0001),  # Small learning rate for fine-tuning
+              loss='categorical_crossentropy',       # Loss for multi-class classification
+              metrics=['accuracy'])
+
+# Print model summary
+print("Complete Model:")
+model.summary()
 
 
