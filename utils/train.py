@@ -64,10 +64,6 @@ model.compile(optimizer=Adam(learning_rate=0.0001),  # Small learning rate for f
               loss='categorical_crossentropy',       # Loss for multi-class classification
               metrics=['accuracy'])
 
-# Print model summary
-print("Complete Model:")
-model.summary()
-
 # Train the model
 history = model.fit(
     train_generator,          # Augmented training data
@@ -77,3 +73,11 @@ history = model.fit(
 )
 
 print("Training complete!")
+
+# Print model summary
+print("Complete Model:")
+model.summary()
+
+# Save the trained model
+model.save('models/emotion_recognition_resnet50.h5')
+print("Model saved successfully!")
